@@ -121,6 +121,12 @@ public class ElasticSourceConnectorConfig extends AbstractConfig {
             "Prefix to prepend to index names to generate the name of the Kafka topic to publish data";
     private static final String TOPIC_PREFIX_DISPLAY = "Topic Prefix";
 
+    public static final String FIXED_TOPIC_CONFIG = "fixed.topic";
+    private static final String FIXED_TOPIC_DOC =
+            "Option used when fixing the topic name so that it does not change depending on the index name.";
+    private static final String FIXED_TOPIC_DEFAULT = "N";
+    private static final String FIXED_PREFIX_DISPLAY = "Fixed Topic Value";
+
     private static final String DATABASE_GROUP = "Elasticsearch";
     private static final String MODE_GROUP = "Mode";
     private static final String CONNECTOR_GROUP = "Connector";
@@ -401,6 +407,16 @@ public class ElasticSourceConnectorConfig extends AbstractConfig {
                 ++orderInGroup,
                 Width.MEDIUM,
                 TOPIC_PREFIX_DISPLAY
+        ).define(
+                FIXED_TOPIC_CONFIG,
+                Type.STRING,
+                FIXED_TOPIC_DEFAULT,
+                Importance.MEDIUM,
+                FIXED_TOPIC_DOC,
+                CONNECTOR_GROUP,
+                ++orderInGroup,
+                Width.MEDIUM,
+                FIXED_PREFIX_DISPLAY
         ).define(
                 CONNECTOR_FIELDNAME_CONVERTER_CONFIG,
                 Type.STRING,
