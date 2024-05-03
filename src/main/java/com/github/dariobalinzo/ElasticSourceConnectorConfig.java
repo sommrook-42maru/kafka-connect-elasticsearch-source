@@ -124,7 +124,7 @@ public class ElasticSourceConnectorConfig extends AbstractConfig {
     public static final String FIXED_TOPIC_CONFIG = "fixed.topic";
     private static final String FIXED_TOPIC_DOC =
             "Option used when fixing the topic name so that it does not change depending on the index name.";
-    private static final String FIXED_TOPIC_DEFAULT = "N";
+    private static final Boolean FIXED_TOPIC_DEFAULT = Boolean.FALSE;
     private static final String FIXED_PREFIX_DISPLAY = "Fixed Topic Value";
 
     private static final String DATABASE_GROUP = "Elasticsearch";
@@ -409,7 +409,7 @@ public class ElasticSourceConnectorConfig extends AbstractConfig {
                 TOPIC_PREFIX_DISPLAY
         ).define(
                 FIXED_TOPIC_CONFIG,
-                Type.STRING,
+                Type.BOOLEAN,
                 FIXED_TOPIC_DEFAULT,
                 Importance.MEDIUM,
                 FIXED_TOPIC_DOC,

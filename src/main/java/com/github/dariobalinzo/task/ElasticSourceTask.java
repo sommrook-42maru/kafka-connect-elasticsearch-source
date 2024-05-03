@@ -62,7 +62,7 @@ public class ElasticSourceTask extends SourceTask {
     private final AtomicBoolean stopping = new AtomicBoolean(false);
     private List<String> indices;
     private String topic;
-    private String fixed_topic;
+    private Boolean fixed_topic;
     private String cursorSearchField;
     private CursorField cursorField;
     private String secondaryCursorSearchField;
@@ -94,7 +94,7 @@ public class ElasticSourceTask extends SourceTask {
         }
 
         topic = config.getString(ElasticSourceConnectorConfig.TOPIC_PREFIX_CONFIG);
-        fixed_topic = config.getString(ElasticSourceConnectorConfig.FIXED_TOPIC_CONFIG);
+        fixed_topic = config.getBoolean(ElasticSourceConnectorConfig.FIXED_TOPIC_CONFIG);
         cursorSearchField = config.getString(ElasticSourceConnectorConfig.INCREMENTING_FIELD_NAME_CONFIG);
         Objects.requireNonNull(cursorSearchField, ElasticSourceConnectorConfig.INCREMENTING_FIELD_NAME_CONFIG
                                                   + " conf is mandatory");
@@ -264,7 +264,7 @@ public class ElasticSourceTask extends SourceTask {
             Schema schema = schemaConverter.convert(elasticDocument, index);
             Struct struct = structConverter.convert(elasticDocument, schema);
 
-            String topicName = fixed_topic.equals("N") ? topic + index : topic;
+            String topicName = fixed_topic == Boolean.TRUE ? topic : topic + index;
 
             SourceRecord sourceRecord = new SourceRecord(
                     sourcePartition,
