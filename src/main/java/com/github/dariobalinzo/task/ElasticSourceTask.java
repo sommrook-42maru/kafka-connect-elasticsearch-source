@@ -63,6 +63,7 @@ public class ElasticSourceTask extends SourceTask {
     private List<String> indices;
     private String topic;
     private Boolean fixed_topic;
+    private Boolean key_index;
     private String cursorSearchField;
     private CursorField cursorField;
     private String secondaryCursorSearchField;
@@ -95,6 +96,7 @@ public class ElasticSourceTask extends SourceTask {
 
         topic = config.getString(ElasticSourceConnectorConfig.TOPIC_PREFIX_CONFIG);
         fixed_topic = config.getBoolean(ElasticSourceConnectorConfig.FIXED_TOPIC_CONFIG);
+        key_index = config.getBoolean(ElasticSourceConnectorConfig.KEY_INDEX_CONFIG);
         cursorSearchField = config.getString(ElasticSourceConnectorConfig.INCREMENTING_FIELD_NAME_CONFIG);
         Objects.requireNonNull(cursorSearchField, ElasticSourceConnectorConfig.INCREMENTING_FIELD_NAME_CONFIG
                                                   + " conf is mandatory");
@@ -249,7 +251,8 @@ public class ElasticSourceTask extends SourceTask {
                     secondaryCursorField,
                     elasticDocument
             );
-            String key = offsetSerializer.toStringOffset(
+
+            String key = key_index == Boolean.TRUE ? index : offsetSerializer.toStringOffset(
                     cursorField,
                     secondaryCursorField,
                     index,

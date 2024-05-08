@@ -127,6 +127,12 @@ public class ElasticSourceConnectorConfig extends AbstractConfig {
     private static final Boolean FIXED_TOPIC_DEFAULT = Boolean.FALSE;
     private static final String FIXED_PREFIX_DISPLAY = "Fixed Topic Value";
 
+    public static final String KEY_INDEX_CONFIG = "key.index";
+    private static final String KEY_INDEX_DOC =
+            "The key includes only index name information.";
+    private static final Boolean KEY_INDEX_DEFAULT = Boolean.FALSE;
+    private static final String KEY_INDEX_DISPLAY = "Key Only Index Name";
+
     private static final String DATABASE_GROUP = "Elasticsearch";
     private static final String MODE_GROUP = "Mode";
     private static final String CONNECTOR_GROUP = "Connector";
@@ -417,6 +423,16 @@ public class ElasticSourceConnectorConfig extends AbstractConfig {
                 ++orderInGroup,
                 Width.MEDIUM,
                 FIXED_PREFIX_DISPLAY
+        ).define(
+                KEY_INDEX_CONFIG,
+                Type.BOOLEAN,
+                KEY_INDEX_DEFAULT,
+                Importance.MEDIUM,
+                KEY_INDEX_DOC,
+                CONNECTOR_GROUP,
+                ++orderInGroup,
+                Width.MEDIUM,
+                KEY_INDEX_DISPLAY
         ).define(
                 CONNECTOR_FIELDNAME_CONVERTER_CONFIG,
                 Type.STRING,
